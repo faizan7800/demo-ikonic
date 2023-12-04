@@ -24,3 +24,7 @@ You'll need to complete the following files:
 
 ## Getting started
 You don't need to worry about a frontend, and we're using SQLite for simplicity. All you need to do is install the composer dependencies and you can get started. Feel free to refer to the tests if you need help understanding how a method should operate.
+
+
+## Done with the Changes
+you can check the code
