@@ -21,9 +21,12 @@ class PayoutOrderJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(
-        public Order $order
-    ) {}
+    protected $order;
+
+    public function __construct(Order $order)
+    {
+        $this->order = $order;
+    }
 
     /**
      * Use the API service to send a payout of the correct amount.
@@ -33,6 +36,15 @@ class PayoutOrderJob implements ShouldQueue
      */
     public function handle(ApiService $apiService)
     {
-        // TODO: Complete this method
+        $apiService = new ApiService(); // Replace with actual ApiService class instantiation
+
+        $amountToSend = $this->order->commission_owed;
+
+        // Assuming you have a method like sendPayout in ApiService
+        $payoutSuccess = $apiService->sendPayout($this->order->merchant->email, $amountToSend);
+
+        // Update the payout_status in the database based on the payout result
+        $payoutStatus = $payoutSuccess ? 'completed' : 'failed';
+        $this->order->update(['payout_status' => $payoutStatus]);
     }
 }

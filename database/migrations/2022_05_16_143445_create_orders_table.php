@@ -18,12 +18,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('merchant_id')->constrained();
             $table->foreignId('affiliate_id')->nullable()->constrained();
-            // TODO: Replace floats with the correct data types (very similar to affiliates table)
-            $table->float('subtotal');
-            $table->float('commission_owed')->default(0.00);
+            // Replace floats with decimal for precise financial values
+            $table->decimal('subtotal', 10, 2); // Adjust precision (10) and scale (2) based on your requirements
+            $table->decimal('commission_owed', 10, 2)->default(0.00); // Adjust precision (10) and scale (2) based on your requirements
             $table->string('payout_status')->default(Order::STATUS_UNPAID);
             $table->string('discount_code')->nullable();
             $table->timestamps();
+
         });
     }
 

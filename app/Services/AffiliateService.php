@@ -27,6 +27,23 @@ class AffiliateService
      */
     public function register(Merchant $merchant, string $email, string $name, float $commissionRate): Affiliate
     {
-        // TODO: Complete this method
+        // Create a new user for the affiliate
+        $user = User::create([
+            'email' => $email,
+            'name' => $name,
+            'password' => bcrypt('password'), // You may want to generate a secure password
+            'type' => User::TYPE_AFFILIATE,
+        ]);
+
+        // Create a new affiliate
+        $affiliate = Affiliate::create([
+            'user_id' => $user->id,
+            'merchant_id' => $merchant->id,
+            'commission_rate' => $commissionRate,
+            'discount_code' => null, // You may set a discount code if needed
+        ]);
+
+        return $affiliate;
     }
+
 }
